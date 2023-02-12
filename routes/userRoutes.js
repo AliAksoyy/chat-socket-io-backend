@@ -25,19 +25,14 @@ router.post("/", async(req,res)=> {
 
 router.post("/login", async(req,res)=> {
     try{
-        const {email,password}=req.body
+        const {email,password}=req.body;
         const user =await User.findByCredentials(email,password);
         user.status = "online"
         await user.save();
         res.status(200).json(user)
-    }catch(error){
-        let msg;
-        if(e.code ==11000) {
-            msg="User already exists"
-        }else {
-            msg=e.message
+    }catch(e){
+        res.status(400).json(e.message)
         }
-        console.log(e)
-        res.status(400).json(msg)
-    }
-})
+    })
+
+    module.exports = router
